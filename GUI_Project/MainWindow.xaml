@@ -1,0 +1,612 @@
+﻿<Window x:Class="GUI_Project.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"        
+        Title="Color Junction" Height="663" Width="420"  MinHeight="220" 
+        xmlns:local="clr-namespace:GUI_Project" 
+        Name="window1"
+        WindowStartupLocation="CenterScreen" 
+        Icon="Bilder/bustervovven.png"
+        FontFamily="./Resources/#Agency FB"
+        KeyboardNavigation.TabNavigation ="None"
+        >    
+
+    <Window.Background>
+        <ImageBrush ImageSource="Bilder/backgroundDark.png"/>        
+    </Window.Background>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <!--<RowDefinition Height="20"/>-->
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100*" />
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Name="menu" Grid.Row="0" Visibility="Collapsed">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Name="btnNewGameMenu" Click="newGame_click" Header="_New Game"/>
+                    <MenuItem Click="Exit_click" Header="_Exit"/>
+                </MenuItem>
+                <MenuItem Header="_About"></MenuItem>
+            </Menu>
+        </DockPanel>
+
+        <Viewbox Grid.Row="1"  Stretch="Uniform">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="410"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0*" />
+                    <ColumnDefinition Width="265" />
+                    <ColumnDefinition Width="0*" />
+                </Grid.ColumnDefinitions>
+
+                <!--FULLSCREENLEFT-->
+                <Grid Name="fullscreenLeft" Grid.Column="0" Grid.Row="0" Width="200" Visibility="Visible">
+                    <Grid Margin="20,5,20,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40*"/>
+
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Row="0" Margin="0,10,0,0" Orientation="Horizontal" VerticalAlignment="Top">
+                            <Button Name="pauseFullscreen" Style="{DynamicResource picButtons}" Click="btnPlay_Click" Width="20" Height="20" Margin="0,0,10,0" BorderThickness="0" IsCancel="True" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="/Bilder/pause.png" Stretch="Uniform"/>
+                                </Button.Background>
+                                <Image>
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Setter Property="Source" Value="Bilder/pause.png"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Source" Value="Bilder/pauseHover.png"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <Button.ToolTip>
+                                    <ToolTip Foreground="White" Background="Transparent" BorderThickness="0" Placement="Bottom">
+                                        <StackPanel>
+                                            <TextBlock Text="Pause" FontWeight="ExtraBold" FontFamily="./Resources/#Agency FB"  FontSize="20" />
+                                        </StackPanel>
+                                    </ToolTip>
+
+                                </Button.ToolTip>
+                            </Button>
+                            <Button Name="restartFullscreen" Style="{DynamicResource picButtons}" Click="btnNewGameGO_Click"  Width="20" Height="20" BorderBrush="{x:Null}" BorderThickness="0" >
+                                <Button.Background>
+                                    <ImageBrush ImageSource="/bilder/replay.png" Stretch="Uniform"/>
+                                </Button.Background>
+                                <Image>
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Setter Property="Source" Value="Bilder/replay.png"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Source" Value="Bilder/replayHover.png"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <Button.ToolTip>
+                                    <ToolTip Foreground="White" Background="Transparent" BorderThickness="0" Placement="Bottom">
+                                        <StackPanel>
+                                            <TextBlock Text="Restart" FontWeight="ExtraBold" FontFamily="./Resources/#Agency FB"  FontSize="20" />
+                                        </StackPanel>
+                                    </ToolTip>
+                                    
+                                </Button.ToolTip>
+                            </Button>
+                        </StackPanel>
+                        <Label Name="lblTimeFullscreen" Grid.Row="1" Padding="0" Foreground="White" FontSize="30"  FontWeight="ExtraBold" Content="Time" VerticalContentAlignment="Bottom" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+                        <Label Name="timeFS" Grid.Row="2" Grid.Column="1" Foreground="White" FontSize="50"  FontWeight="ExtraBold" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="0"/>
+                        <Label Name="lblScoreFullscreen" Padding="0" Grid.Row="3" Foreground="White" FontSize="30"  FontWeight="ExtraBold" Content="Score" VerticalContentAlignment="Bottom" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>                        
+                        <Label Name="scoreFS"  Grid.Row="4" Foreground="White" FontSize="50"  FontWeight="ExtraBold" Content="0" HorizontalAlignment="Center" VerticalContentAlignment="Top" Padding="0"/>
+                        <Label Name="lblLevelFullscreen" Grid.Row="5" Padding="0" Foreground="White" FontSize="30"  FontWeight="ExtraBold" Content="Level" VerticalContentAlignment="Bottom" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+                        <Label Name="levelFS" Grid.Row="6" Grid.Column="1" Foreground="White" FontSize="50"  FontWeight="ExtraBold" Content="1" HorizontalAlignment="Center" VerticalAlignment="Top" Padding="0"/>
+                    </Grid>
+                </Grid>
+                <!--//FULLSCREENLEFT-->
+
+                <!--FULLSCREENRIGHT-->
+                <Grid Name="fullscreenRight" Grid.Column="2" Width="200" Visibility="Visible" Margin="0,0,0,0">
+                    <Grid Name="sIngame"  Grid.Row="0" Margin="0,30,0,0" Visibility="Visible" >
+                        <Grid Margin="20,5,20,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="13*"/>
+                                <RowDefinition Height="6*"/>
+                                <RowDefinition Height="58*"/>
+                                <RowDefinition Height="15*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="0" Grid.ColumnSpan="2" Foreground="White" Content="High Score" FontWeight="ExtraBold" HorizontalAlignment="Center" FontSize="35"  Background="Transparent"/>
+                            <Label Name="lblHighScoren" Grid.Row="1" Grid.Column="0" Height="43" Width="120" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20" Padding="0"  Content="GameMode" Background="Transparent" Foreground="White"/>
+
+                            <DataGrid GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#4C808080" Name="highScoreListFullscreen" Margin="0" Height="213" Grid.Row="2" ItemsSource="{Binding Customers}" VerticalAlignment="Top"   FontSize="15" Background="{x:Null}" Focusable="False" IsEnabled="False" BorderThickness="2" Foreground="White" RowBackground="Transparent" CanUserResizeRows="False"  AutoGenerateColumns="False" BorderBrush="#66808080" HeadersVisibility="Column" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
+                                <DataGrid.Resources>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="Background" Value="#4C808080" />
+                                        <Setter Property="Foreground" Value="White" />
+                                    </Style>
+                                </DataGrid.Resources>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Nr." Width="1*" Binding="{Binding Path=Nr}" CanUserSort="False" CanUserResize="False" Foreground="White" FontSize="13.8"/>
+                                    <DataGridTextColumn Header="Player" Width="3*" Binding="{Binding Path=Player}" CanUserSort="False" CanUserResize="False" Foreground="White" FontSize="13.8"/>
+                                    <DataGridTextColumn Header="Score" Width="3*" Binding="{Binding Path=Score}" CanUserSort="False" CanUserResize="False" Foreground="White" FontSize="13.8"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <!--//FULLSCREENRIGHT-->
+
+                <!--SETTINGS GRID-->
+                <Grid Name="settings"  Grid.Column="1" Grid.Row="0" Visibility="Hidden">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="Bilder/Buster.png"/>
+                    </Grid.Background>
+                    <Grid Margin="10,6,10,2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="7*"/>
+                            <RowDefinition Height="8*"/>
+                            <RowDefinition Height="5*"/>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="5*"/>
+                            <RowDefinition Height="5*"/>
+                            <RowDefinition Height="15*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50*" />
+                            <ColumnDefinition Width="50*" />
+                            <ColumnDefinition Width="40*" />
+                            <ColumnDefinition Width="40*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.ColumnSpan="5" Foreground="White" Content="Settings" HorizontalAlignment="Center" FontSize="35"   Background="Transparent" VerticalAlignment="Center" />
+                        <GroupBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="3" BorderThickness="0.1" BorderBrush="#99FFFFFF" Header="Survival settings"  FontSize="15" Foreground="White" Margin="0,0,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20*" />
+                                    <ColumnDefinition Width="20*" />
+                                    <ColumnDefinition Width="20*" />
+                                    <ColumnDefinition Width="20*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="35"/>
+                                    <RowDefinition Height="15"/>
+                                </Grid.RowDefinitions>
+
+
+                                <Label Grid.Row="0" Foreground="White" Content="Gamefield"  HorizontalAlignment="Right" FontSize="15"   VerticalAlignment="Center"/>
+                                <Button Name="btnDif1" Click="btnDif1_Click" Grid.Row="0" Grid.Column="1" Height="30" Width="50" HorizontalAlignment="Right" FontSize="15"  Content="Small" Style="{DynamicResource modeButtonLeft}" />
+                                <Button Name="btnDif2" Click="btnDif2_Click" Grid.Row="0" Grid.Column="2" Height="30" Width="100" HorizontalAlignment="Center" FontSize="15"  Content="Medium" Style="{DynamicResource modeButtonRight}" />
+                                <Button Name="btnDif3" Click="btnDif3_Click" Grid.Row="0" Grid.Column="3" Height="30" Width="50" HorizontalAlignment="Left" FontSize="15"  Content="Large" Style="{DynamicResource modeButtonRight}" />
+                                <Label Grid.Row="1" Grid.ColumnSpan="1" Foreground="White" Content="Colors" HorizontalAlignment="Right" FontSize="15"   VerticalAlignment="Top"/>
+                                <Button Name="btnCol1" Click="btnCol1_Click" Grid.Row="1" Grid.Column="1" Height="30" Width="50" HorizontalAlignment="Right" FontSize="15" VerticalAlignment="Top"  Content="-" Style="{DynamicResource modeButtonLeft}" />
+                                <Button Name="btnCol2" Click="btnCol2_Click" Grid.Row="1" Grid.Column="2" Height="30" Width="100" HorizontalAlignment="Center" FontSize="15" VerticalAlignment="Top"  Content="4" Style="{DynamicResource modeButtonRight}" IsEnabled="False"/>
+                                <Button Name="btnCol3" Click="btnCol3_Click" Grid.Row="1" Grid.Column="3" Height="30" Width="50" HorizontalAlignment="Left" FontSize="15" VerticalAlignment="Top"  Content="+" Style="{DynamicResource modeButtonRight}" />
+                                <Label Grid.Row="2" Grid.ColumnSpan="4" Padding="0" Foreground="White" Content="Settings will take effect after a new game is started!"  HorizontalAlignment="Center" FontSize="10"   VerticalAlignment="top"/>
+                            </Grid>
+                        </GroupBox>
+                        <Label Grid.Row="4"  Foreground="White" Content="Sound" HorizontalAlignment="Right" FontSize="15"   VerticalAlignment="Center" Margin="0,10,0,0"/>
+                        <Button Name="btnSoundOff" Click="btnSoundOff_Click" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="43,10,0,0" Height="30" Width="50" HorizontalAlignment="Left" FontSize="15"  Content="Off" Style="{DynamicResource modeButtonLeft}" />
+                        <Button Name="btnSoundOn" Click="btnSoundOn_Click"  Grid.Row="4" Grid.Column="2"  Grid.ColumnSpan="2" Margin="24.9,10,0,0" Height="30" Width="50" HorizontalAlignment="Left" FontSize="15"  Content="On" Style="{DynamicResource modeButtonRight}" />
+                        <Label Grid.Row="5"  Foreground="White" Content="Fullscreen" HorizontalAlignment="Right" FontSize="15" Margin="0,10,0,0"  VerticalAlignment="Center"/>
+                        <Button Name="btnFullscreenOff" Click="btnFullscreenOff_Click" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="43,10,0,0" Height="30" Width="50" HorizontalAlignment="Left" FontSize="15"  Content="Off" Style="{DynamicResource modeButtonLeft}" />
+                        <Button Name="btnFullscreenOn" Click="btnFullscreenOn_Click" Grid.Row="5" Grid.Column="2"  Grid.ColumnSpan="2" Margin="24.9,10,0,0" Height="30" Width="50" HorizontalAlignment="Left" FontSize="15"  Content="On" Style="{DynamicResource modeButtonRight}" />
+                    </Grid>
+
+                    <Button Name="btnSettingsBack" Click="btnSettingsBack_Click" Grid.Row="5" Grid.ColumnSpan="2" Height="43"  Width="244" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Bottom" FontSize="20"  Content="Back" Style="{DynamicResource GlassButton}" />
+                </Grid>
+                <!--//SETTINGS GRID-->
+
+                <!--HIGHSCORE GRID-->
+                <Grid Name="highScores"  Grid.Row="0" Grid.Column="1" Visibility="Hidden">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="Bilder/Buster.png"/>
+                    </Grid.Background>
+                    <Grid Margin="10,6,10,2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="12*"/>
+                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="58*"/>
+                            <RowDefinition Height="15*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50*" />
+                            <ColumnDefinition Width="50*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0" Grid.ColumnSpan="2" Foreground="White" Content="High Score" HorizontalAlignment="Center" FontSize="35"  Background="Transparent"/>
+                        <Button Name="btnMode1" Click="btnMode1_Click" Grid.Row="1" Grid.Column="0" Height="43" Width="120" HorizontalAlignment="Right" FontSize="20"  Content="Classic" Style="{DynamicResource modeButtonLeft}" />
+                        <Button Name="btnMode2" Click="btnMode2_Click" Grid.Row="1" Grid.Column="1" Height="43" Width="120" HorizontalAlignment="Left" FontSize="20"  Content="Surival" Style="{DynamicResource modeButtonRight}" />
+
+                        <DataGrid GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#4C808080" Name="highScoreList" Margin="10,10,10,10" Height="213" Width="210" Grid.Row="2" Grid.ColumnSpan="2"    FontSize="15" Background="{x:Null}" Focusable="False" IsEnabled="False" BorderThickness="2" Foreground="White" RowBackground="Transparent" CanUserResizeRows="False"  AutoGenerateColumns="False" BorderBrush="#66808080" HeadersVisibility="Column" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
+                            <DataGrid.Resources>
+                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="Background" Value="#4C808080" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Nr." Width="1*" Binding="{Binding Path=Nr}" CanUserSort="False" CanUserResize="False" Foreground="White" FontSize="13.8"/>
+                                <DataGridTextColumn Header="Player" Width="3*" Binding="{Binding Path=Player}" CanUserSort="False" CanUserResize="False" Foreground="White" FontSize="13.8"/>
+                                <DataGridTextColumn Header="Score" Width="3*" Binding="{Binding Path=Score}" CanUserSort="False" CanUserResize="False" Foreground="White" FontSize="13.8"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Name="btnHighScoreBack" Click="btnHighScoreBack_Click" Grid.Row="3" Grid.ColumnSpan="2" Height="43"  Width="244" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,8" FontSize="20"  Content="Back" Style="{DynamicResource GlassButton}" />
+                    </Grid>
+                </Grid>
+                <!--/HIGHSCORE GRID-->
+
+                <!--/startScreen GRID-->
+                <Grid  Name="startScreen" Grid.Column="1" Grid.Row="0" Visibility="Visible">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="Bilder/BusterStart.png"/>
+                    </Grid.Background>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,120,0,0">
+                        <Button Style="{DynamicResource GlassButton}" Visibility="Collapsed" IsEnabled="False" Width="120" Height="35" FontSize="20"  Margin="20,2,20,2" Name="btnResume" Click="btnResume_Click" Content="Resume" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Button Style="{DynamicResource GlassButton}" Width="120" Height="35" FontSize="20"  Margin="20,2,20,5"  Name="btnStartGame" Click="btnStartGame_Click" Content="New Game"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Button Style="{DynamicResource GlassButton}" Width="120" Height="35" FontSize="20"  Margin="20,2,20,5"  Name="btnHighScore" Click="btnHighScore_Click" Content="High Score" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Button Style="{DynamicResource GlassButton}" Width="120" Height="35" FontSize="20"  Margin="20,2,20,5"  Name="btnRules" Click="btnRules_Click" Content="Rules" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Button Style="{DynamicResource GlassButton}" Width="120" Height="35" FontSize="20"  Margin="20,2,20,5"  Name="btnSettings" Click="btnSettings_Click" Content="Settings" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Button Style="{DynamicResource GlassButton}" Width="120" Height="35" FontSize="20"  Margin="20,2,20,0"  Name="btnExit" Click="Exit_click" Content="Exit" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Grid>
+                <!--/startScreen GRID-->
+
+                <!--/BlockClicks GRID-->
+                <Grid  Name="BlockClicks" Grid.Row="0" Grid.Column="1" Visibility="Hidden" Panel.ZIndex="3" Margin="0,42,0,0">
+                    <Grid.Background>
+                        <SolidColorBrush Color="White" Opacity="0"/>
+                    </Grid.Background>
+                    <Canvas Name="canvas2">
+                        <Label Name="lbl"  FontSize="20"></Label>
+                    </Canvas>
+                </Grid>
+                <!--/BlockClicks GRID-->
+
+                <!--/extraWindows GRID-->
+                <Grid Panel.ZIndex="4" Name="extraWindows" Background="Transparent" Grid.Row="0" Grid.Column="1" Visibility="Hidden">
+                    <ContentControl x:Name="ContentArea"  Margin="0,80,0,180" />
+                </Grid>
+                <!--/extraWindows GRID-->
+
+                <!--/playScreen GRID-->
+                <Grid Name="playScreen" Grid.Column="1"  Grid.Row="0" Visibility="Hidden">
+                    
+                    <Grid Margin="0,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="90*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Panel.ZIndex="10" Name="topPanel" Grid.Row="0" Margin="0,0.5,0,0" Visibility="Hidden">
+                            <Grid.Background>
+                                <ImageBrush ImageSource="Bilder/fullscreenTop.png"/>
+                            </Grid.Background>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="15"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20*"/>
+                                <ColumnDefinition Width="20*"/>
+                                <ColumnDefinition Width="10*"/>
+                                <ColumnDefinition Width="40*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Name="lblPoints" Grid.Column="0" FontWeight="ExtraBold"  FontSize="12" Content="Score" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" Padding="0" Grid.ColumnSpan="2" Margin="0,2,0,0"/>
+                            <Label Name="Points" Grid.Column="0" Grid.Row="1" FontWeight="ExtraBold" Margin="0,0,0,4"  FontSize="20" Content="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" Padding="0" Grid.ColumnSpan="2" />
+                            <Button Name="Pause" Style="{DynamicResource picButtons}" Click="btnPlay_Click" Grid.Column="2"  Width="30" Height="30" BorderBrush="{x:Null}" BorderThickness="0" Grid.RowSpan="2" Padding="0" Margin="0,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Center" IsCancel="True">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="/bilder/pause.png" Stretch="Uniform"/>
+                                </Button.Background>
+                                <Image>
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Setter Property="Source" Value="Bilder/pause.png"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Source" Value="Bilder/pauseHover.png"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <Button.ToolTip>
+                                    <ToolTip Foreground="White" Background="Transparent" BorderThickness="0" Placement="Bottom">
+                                        <StackPanel>
+                                            <TextBlock Text="Pause" FontWeight="ExtraBold"  FontFamily="./Resources/#Agency FB" FontSize="20" />
+                                        </StackPanel>
+                                    </ToolTip>
+                            
+                                </Button.ToolTip>
+                            </Button>
+                            <Grid Name="surivalGrid" Grid.Column="3" Grid.ColumnSpan="2" Visibility="Visible" Grid.RowSpan="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="15"></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label Name="lblClock" Grid.Row="0" FontFamily="Agency FB" FontSize="12" Grid.Column="0" FontWeight="ExtraBold" Content="Time" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" Padding="0" Margin="0,2,0,0" />
+                                <Label Name="timeClock" Grid.Row="1" Grid.Column="2" FontFamily="Agency FB" FontSize="20" FontWeight="ExtraBold" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Center" Foreground="White" Padding="0" Content="" Margin="0,0,0,4" />
+                            </Grid>
+                            
+
+                            <Grid Name="classicGrid" Grid.Column="3" Visibility="Hidden" Grid.RowSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50*"/>
+                                    <ColumnDefinition Width="50*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="15"></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Label Name="lblTries" Padding="0" Margin="8,2,0,0" FontFamily="Agency FB" FontSize="12" Grid.Column="0" FontWeight="ExtraBold"  Content="Lives" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" />
+                                <Label Name="tries" Padding="0" Margin="8,0,0,4" Grid.Column="0" FontFamily="Agency FB" FontWeight="ExtraBold" FontSize="20" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" Content="5" />
+                                <Label Name="lblLevel" Padding="0" Margin="0,2,0,0" FontFamily="Agency FB" FontSize="12" Grid.Column="2" FontWeight="ExtraBold" Content="Level" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" />
+                                <Label Name="level" Padding="0" Margin="0,0,0,4" Grid.Column="3" FontFamily="Agency FB" FontWeight="ExtraBold" FontSize="20" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" Content="1" />
+                            </Grid>
+                        
+                        </Grid>
+
+                        <Grid Panel.ZIndex="10" Name="topPanelFree" Grid.Row="0" Margin="0,0,0,0" Visibility="Collapsed">
+                            <Grid.Background>
+                                <ImageBrush ImageSource="Bilder/fullscreenTop.png"/>
+                            </Grid.Background>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25*"/>
+                                <ColumnDefinition Width="40*"/>
+                                <ColumnDefinition Width="40*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="10,0,0,0"  VerticalAlignment="Center" Height="40" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Button Name="pauseFreescreen" Grid.Column="0" Style="{DynamicResource picButtons}" Click="btnPlay_Click" Width="20" Height="20" Margin="0,14,5,4" BorderThickness="0" IsCancel="True">
+                                    <Button.Background>
+                                        <ImageBrush ImageSource="/Bilder/pause.png" Stretch="Uniform"/>
+                                    </Button.Background>
+                                    <Image>
+                                        <Image.Style>
+                                            <Style TargetType="{x:Type Image}">
+                                                <Setter Property="Source" Value="Bilder/pause.png"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Source" Value="Bilder/pauseHover.png"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <Button.ToolTip>
+                                        <ToolTip Foreground="White" Background="Transparent" BorderThickness="0" Placement="Bottom">
+                                            <StackPanel>
+                                                <TextBlock Text="Pause" FontWeight="ExtraBold" FontFamily="./Resources/#Agency FB" FontSize="20" />
+                                            </StackPanel>
+                                        </ToolTip>
+
+                                    </Button.ToolTip>
+                                </Button>
+                                <Button Name="restartFreescreen" Grid.Column="1" Style="{DynamicResource picButtons}" Margin="-10,14,0,4" Click="btnNewGameGO_Click"  Width="20" Height="20" BorderBrush="{x:Null}" BorderThickness="0" >
+                                    <Button.Background>
+                                        <ImageBrush ImageSource="/bilder/replay.png" Stretch="Uniform"/>
+                                    </Button.Background>
+                                    <Image>
+                                        <Image.Style>
+                                            <Style TargetType="{x:Type Image}">
+                                                <Setter Property="Source" Value="Bilder/replay.png"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Source" Value="Bilder/replayHover.png"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <Button.ToolTip>
+                                        <ToolTip Foreground="White" Background="Transparent" BorderThickness="0" Placement="Bottom">
+                                            <StackPanel>
+                                                <TextBlock Text="Restart" FontWeight="ExtraBold" FontFamily="./Resources/#Agency FB" FontSize="20" />
+                                            </StackPanel>
+                                        </ToolTip>
+
+                                    </Button.ToolTip>
+                                </Button>
+                            </Grid>
+                            <Grid Grid.Column="1" Margin="0,-4,0,0" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="22*"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Content="Size"  FontSize="10" Foreground="White" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" ></Label>
+                                <Grid Grid.Row="1" Margin="0,0,0,-6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="40*"/>
+                                        <ColumnDefinition Width="30*"/>
+                                        <ColumnDefinition Width="40*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Name="btnFreePanel1" Click="btnDif1_Click" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Right" FontSize="10"  Content="Small" Style="{DynamicResource modeButtonLeft}" Width="30" />
+                                    <Button Name="btnFreePanel2" Click="btnDif2_Click" Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" FontSize="10"  Content="Medium" Style="{DynamicResource modeButtonRight}" Width="57"/>
+                                    <Button Name="btnFreePanel3" Click="btnDif3_Click" Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Left" FontSize="10"  Content="Large" Style="{DynamicResource modeButtonRight}" Width="30" />
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Column="2" Margin="0,-4,0,0" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30*"/>
+                                    <RowDefinition Height="22*"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Content="Colors"  FontSize="10" Foreground="White" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" ></Label>
+                                <Grid Grid.Row="1" Margin="0,0,0,-6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="40*"/>
+                                        <ColumnDefinition Width="30*"/>
+                                        <ColumnDefinition Width="40*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Name="btnFreeColor1" Click="btnCol1_Click" Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Right" FontSize="10"  Content="-" Style="{DynamicResource modeButtonLeft}" Width="30" />
+                                    <Button Name="btnFreeColor2" Click="btnCol2_Click" Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" FontSize="10"  Content="4" Style="{DynamicResource modeButtonRight}" Width="57" />
+                                    <Button Name="btnFreeColor3" Click="btnCol3_Click" Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Left" FontSize="10"  Content="+" Style="{DynamicResource modeButtonRight}" Width="30" />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Name="topPanelFullScreen" Panel.ZIndex="10" Grid.Row="0" Grid.Column="1" Visibility="Collapsed">
+                            <Grid.Background>
+                                <ImageBrush ImageSource="Bilder/fullscreenTopLogo.png"/>
+                            </Grid.Background>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.Background>
+                                <ImageBrush ImageSource="Bilder/Buster.png"/>
+                            </Grid.Background>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="96*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="98*" />
+                                <RowDefinition Height="1.1*" />
+                            </Grid.RowDefinitions>
+                            <Canvas Name="canvas1" Grid.Column="1" Grid.Row="0">
+                                <Canvas.Background>
+                                    <SolidColorBrush Color="White" Opacity="0"></SolidColorBrush>
+                                </Canvas.Background>
+                            </Canvas>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <!--/playScreen GRID-->
+
+                <!--/Rules GRID-->
+                <Grid Name="screenRules"  Grid.Column="1" Grid.Row="0" Visibility="Hidden">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="Bilder/Buster.png"/>
+                    </Grid.Background>
+                    <Grid Margin="10,6,10,2">
+                    <Grid.RowDefinitions>
+                            <RowDefinition Height="12*"/>
+                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="58*"/>
+                            <RowDefinition Height="15*"/>
+                    </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50*" />
+                            <ColumnDefinition Width="50*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0" Grid.ColumnSpan="2" Foreground="White" Content="Rules" HorizontalAlignment="Center" FontSize="35"  Background="Transparent"/>
+                        <Button Name="btnMode1Rules" Click="btnMode1Rules_Click" Grid.Row="1" Grid.Column="0" Height="43" Width="120" HorizontalAlignment="Right" FontSize="20"  Content="Classic" Style="{DynamicResource modeButtonLeft}" />
+                        <Button Name="btnMode2Rules" Click="btnMode2Rules_Click" Grid.Row="1" Grid.Column="1" Height="43" Width="120" HorizontalAlignment="Left" FontSize="20"  Content="Surival" Style="{DynamicResource modeButtonRight}" />
+                        <Border Grid.Row="2" Grid.ColumnSpan="2" BorderBrush="Gray"  BorderThickness="1" CornerRadius="20" Margin="5">
+                        <Grid>
+                              
+
+                            <Grid Name="rulesClassic" Visibility="Visible">
+                            <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="208"/>
+                            </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="15"/>
+                                        <ColumnDefinition Width="100*"/>
+                                        <ColumnDefinition Width="15"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Name="lblStep" Grid.Column="1" Content="Step 1"  Foreground="White" HorizontalContentAlignment="Center" FontSize="18"/>
+
+                                    <Button Name="btnRulesLeft" Style="{DynamicResource picButtons}" Margin="0,0,0,15" Click="btnLeftRules_Click"  Width="15" Height="15" BorderBrush="{x:Null}" BorderThickness="0" Grid.Row="1" VerticalContentAlignment="Center" >
+                                        <Button.Background>
+                                            <ImageBrush ImageSource="/bilder/arrow.png" Stretch="Uniform"/>
+                                        </Button.Background>
+                                        <Image>
+                                            <Image.Style>
+                                                <Style TargetType="{x:Type Image}">
+                                                    <Setter Property="Source" Value="Bilder/arrow.png"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Source" Value="Bilder/arrowGlow.png"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
+                                        <Button.ToolTip>
+                                            <ToolTip Foreground="White" Background="Transparent" BorderThickness="0" Placement="Bottom">
+                                                <StackPanel>
+                                                    <TextBlock Text="Previous" FontWeight="ExtraBold" FontFamily="./Resources/#Agency FB" FontSize="20" />
+                                                </StackPanel>
+                                            </ToolTip>
+
+                                        </Button.ToolTip>
+                                    </Button>
+                                    <Button Name="btnRulesRight" Style="{DynamicResource picButtons}" Margin="0,0,0,15" Click="btnRulesRight_click"  Width="15" Height="15" BorderBrush="{x:Null}" BorderThickness="0" Grid.Row="1" Grid.Column="2" VerticalContentAlignment="Center" >
+                                        <Button.Background>
+                                            <ImageBrush ImageSource="/bilder/arrowR.png" Stretch="Uniform" TileMode="FlipX"/>
+                                        </Button.Background>
+                                        <Image>
+                                            <Image.Style>
+                                                <Style TargetType="{x:Type Image}">
+                                                    <Setter Property="Source" Value="Bilder/arrowR.png"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Source" Value="Bilder/arrowRGlow.png" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
+                                        <Button.ToolTip>
+                                            <ToolTip Foreground="White" Background="Transparent" BorderThickness="0" Placement="Bottom">
+                                                <StackPanel>
+                                                    <TextBlock Text="Next" FontWeight="ExtraBold" FontFamily="./Resources/#Agency FB"  FontSize="20" />
+                                                </StackPanel>
+                                            </ToolTip>
+
+                                        </Button.ToolTip>
+                                    </Button>
+                                   
+                                    <Grid Name="rulesPic" Grid.Column="1" Grid.Row="1">
+                                        <Image Name="picture" Source="/bilder/rules0c.png"></Image>
+                        </Grid>
+
+                        </Grid>
+                            </Grid>
+                    </Border>
+                        <Button Name="btnRulesBack" Click="btnRulseBack_Click" Grid.Row="3" Grid.ColumnSpan="2" Height="43"  Width="244" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,8" FontSize="20"  Content="Back" Style="{DynamicResource GlassButton}" />
+                    </Grid>
+                </Grid>
+                <!--/Rules GRID-->
+            </Grid>
+        </Viewbox>
+    </Grid>
+</Window>
+
+    
